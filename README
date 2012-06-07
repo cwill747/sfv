@@ -1,0 +1,15 @@
+Sometimes, we want to share as easy as possible our files, without a big and complex filemanager. This file viewer has this approach and is very easy to modify.
+
+This project:
+
+    Uses some Tango icons
+    is based on a tutorial to generate correct headers
+    Uses a hack to display correct png pictures in IE 
+
+Last modifications
+
+    +02.08.2008):
+        +Some Bugs resolved 
+    +21.04.2008):
+        +Some Bugs resolved
+        +Sortable columns (Name, Size and Date modified) 
