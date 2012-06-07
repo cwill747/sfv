@@ -1,0 +1,102 @@
+body
+{
+	padding: 0;
+	margin: 0;
+	background-color: #666;
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.7em;
+	text-align: center;
+}
+a
+{
+	text-decoration: none;
+    color:#000;
+	
+}
+
+
+#contents	
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right:auto;
+	margin-left:auto;
+	width: 600px;
+	padding: 10px;
+	background-color: #FFF;
+	color: #000;
+	text-align: left;
+}
+
+h1	
+{
+	color: #333;
+	background-color: transparent;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+}
+
+p	
+{
+	color: #333;
+	background-color: transparent;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.7em;
+}
+.tableHeader
+{
+	background-color: #DEDEDE;
+	font-weight:bold;
+
+}
+
+.tableOdd
+{
+	background-color: #FAFAED;
+	
+}
+
+.tableBorder
+{
+    border: thin solid #DFDFDF;			
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1em;
+}
+.tableElement
+{
+	font-style:normal;
+	text-decoration: none;
+	color:#000;
+}
+.tableElementInfo
+{
+	font-style:normal;
+	text-align: right;
+	text-decoration: none;
+	color:#000;
+    border-left: thin dashed #DFDFDF;
+    
+}
+
+.path
+{
+	background-color: #DEDEDE;
+	font-weight:bold;
+
+}
+
+.pathDir
+{
+    font-weight:bold;
+    font-style:normal;
+    text-decoration: none;
+    color:#000;
+}
+.pathCurrentDir
+{
+	font-weight:bold;
+	color:#990000;
+	font-style:normal;
+	text-decoration: none;
+}
