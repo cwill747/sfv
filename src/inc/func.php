@@ -1,8 +1,9 @@
 <?php
 /**
  * this file contain all functions
- * @author Cédric Daucourt <daucourt.cedric@gmail.com>
- * @version 0.1
+ * @author CÃ©dric Daucourt <daucourt.cedric@gmail.com>
+ * @author Cameron Will <cwill747@gmail.com>
+ * @version 0.3
  */   
 
 
@@ -11,34 +12,106 @@
  * @param directory full path
  * @return array (content with type - name - size - last modified)
  */  
-function read_dir($dir){
+function read_dir($dir, $denyFiles = null){
     $list=array();
-    if ($dh = opendir($dir)) {
-        while (($file = readdir($dh))!= false ) {
-            if ($file !="." && $file != ".."){
-                if (is_dir($dir._SEPARATOR.$file)){
-                    $nb = count($list['directories']);
-                    $list['directories'][$nb]['name'] = $file;
-                    $list['directories'][$nb]['size'] = 0;
-                    $list['directories'][$nb]['fsize'] =' ';
-                    $list['directories'][$nb]['icon'] = file_icon($file);
-                    /* the directory is modified when the number of files is changed or the name changed */
-                    $list['directories'][$nb]['lastm'] = filemtime($dir._SEPARATOR.$file);
-                    $list['directories'][$nb]['lastms'] = date ("d m Y H:i:s", $list['directories'][$nb]['lastm']);
-                }else{
-                    $nb = count($list['files']);
-                    $list['files'][$nb]['name'] = $file;
-                    $list['files'][$nb]['size'] = filesize($dir._SEPARATOR.$file);
-                    $list['files'][$nb]['fsize'] = format_size($list['files'][$nb]['size'],2);
-                    $list['files'][$nb]['lastm'] = filemtime($dir._SEPARATOR.$file);
-                    $list['files'][$nb]['lastms'] = date ("d m Y  H:i:s", $list['files'][$nb]['lastm']);
-                    $list['files'][$nb]['icon'] = file_icon($file);
-                
-                }
-            }
-        }
-        closedir($dh);
-    }
+	if(is_dir($dir))
+	{
+		if ($dh = opendir($dir)) {
+			while (($file = readdir($dh))!= false ) {
+				$deny = false;
+				if ($file !="." && $file != ".."){ // Make sure that you don't include the current file, or upwards directory for security
+					if (is_dir($dir._SEPARATOR.$file))
+					{
+						if(isset($denyFiles))
+						{
+							foreach($denyFiles as $denFile)
+							{
+								
+								if(strpos($dir.$denFile, $file))
+								{
+									$deny = true;
+									
+								}
+							}
+							if(!$deny)
+							{
+								$nb = (isset($list['directories']) ? count($list['directories']) : 0);
+								$list['directories'][$nb]['name'] = $file;
+								$list['directories'][$nb]['size'] = 0;
+								$list['directories'][$nb]['fsize'] =' ';
+								$list['directories'][$nb]['icon'] = file_icon($file);
+								/* the directory is modified when the number of files is changed or the name changed */
+								$list['directories'][$nb]['lastm'] = filemtime($dir._SEPARATOR.$file);
+								$list['directories'][$nb]['lastms'] = date ("d m Y H:i:s", $list['directories'][$nb]['lastm']);
+								$list['directories'][$nb]['path'] = str_replace("//", "/", $dir.$file);
+
+							}
+						}
+						else{
+							$nb = (isset($list['directories']) ? count($list['directories']) : 0);
+							$list['directories'][$nb]['name'] = $file;
+							$list['directories'][$nb]['size'] = 0;
+							$list['directories'][$nb]['fsize'] =' ';
+							$list['directories'][$nb]['icon'] = file_icon($file);
+							/* the directory is modified when the number of files is changed or the name changed */
+							$list['directories'][$nb]['lastm'] = filemtime($dir._SEPARATOR.$file);
+							$list['directories'][$nb]['lastms'] = date ("d m Y H:i:s", $list['directories'][$nb]['lastm']);
+							$list['directories'][$nb]['path'] = str_replace("//", "/", $dir.$file);
+						}
+						
+					}
+					else{
+						if(isset($denyFiles))
+						{
+							foreach($denyFiles as $denyFile)
+							{
+								if(strpos($dir.$file, $denyFile))
+								{
+									$deny = true;
+								}
+							}
+							if(!$deny)
+							{
+								$nb = (isset($list['files']) ? count($list['files']) : 0);
+								$list['files'][$nb]['name'] = $file;
+								$list['files'][$nb]['size'] = filesize($dir._SEPARATOR.$file);
+								$list['files'][$nb]['fsize'] = format_size($list['files'][$nb]['size'],2);
+								$list['files'][$nb]['lastm'] = filemtime($dir._SEPARATOR.$file);
+								$list['files'][$nb]['lastms'] = date ("d m Y  H:i:s", $list['files'][$nb]['lastm']);
+								$list['files'][$nb]['icon'] = file_icon($file);
+							}
+						}
+						else
+						{
+							$nb = (isset($list['files']) ? count($list['files']) : 0);
+							$list['files'][$nb]['name'] = $file;
+							$list['files'][$nb]['size'] = filesize($dir._SEPARATOR.$file);
+							$list['files'][$nb]['fsize'] = format_size($list['files'][$nb]['size'],2);
+							$list['files'][$nb]['lastm'] = filemtime($dir._SEPARATOR.$file);
+							$list['files'][$nb]['lastms'] = date ("d m Y  H:i:s", $list['files'][$nb]['lastm']);
+							$list['files'][$nb]['icon'] = file_icon($file);
+						}
+					}
+				}
+			}
+			
+			// If there are no directories or files in this directory, display "No files found" in the viewer
+			if(!(isset($list['files']) || isset($list['directories'])))
+			{
+				$list['files'][0]['name'] = "No files found";
+				$list['files'][0]['size'] = null;
+				$list['files'][0]['fsize'] = null;
+				$list['files'][0]['lastm'] = null;
+				$list['files'][0]['lastms'] = null;
+				$list['files'][0]['icon'] = null;
+			}
+			closedir($dh);
+		}
+		else
+		{
+			return false;
+		}
+	} else return false;
     return $list;
 }
 
