@@ -2,7 +2,7 @@
 /**
  * This is the main file. Don't forget to edit inc/config.php
  * Original
- * @author Cédric Daucourt <daucourt.cedric@gmail.com>
+ * @author CÃ©dric Daucourt <daucourt.cedric@gmail.com>
  * @version 0.1
  * Updated
  * @author Cameron Will <cwill747@gmail.com>

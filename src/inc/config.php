@@ -1,7 +1,8 @@
 <?php
 /**
  * This is the config file
- * @author Cédric Daucourt <daucourt.cedric@gmail.com>
+ * @author CÃ©dric Daucourt <daucourt.cedric@gmail.com>
+ * @author Cameron Will <cwill747@gmail.com>
  * @version 1.0
  */ 
  
