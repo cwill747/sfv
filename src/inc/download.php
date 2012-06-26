@@ -16,7 +16,7 @@ define('ALLOWED_REFERRER', '');
 
 // Download folder, i.e. folder where you keep all files for download.
 // MUST end with slash (i.e. "/" )
-define('BASE_DIR','../../drop-box/');
+define('BASE_DIR','../example/');
 
 // log downloads?  true/false
 define('LOG_DOWNLOADS',false);
@@ -157,6 +157,9 @@ else {
   $asfname = str_replace(array('"',"'",'\\','/'), '', $_GET['fc']);
   if ($asfname === '') $asfname = 'NoName';
 }
+
+// Flush all the headers from the downloaded file - prevents html from getting out to the stream
+ob_end_clean();
 
 // set headers
 header("Pragma: public");
